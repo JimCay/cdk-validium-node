@@ -28,4 +28,5 @@ type stateInterface interface {
 // ethermanInterface contains the methods required to interact with ethereum.
 type ethermanInterface interface {
 	GetL1GasPrice(ctx context.Context) *big.Int
+	GetTokenRatio() (float64, error)
 }

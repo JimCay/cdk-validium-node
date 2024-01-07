@@ -3,6 +3,7 @@ package sequencer
 import (
 	"github.com/0xPolygonHermez/zkevm-data-streamer/log"
 	"github.com/0xPolygonHermez/zkevm-node/config/types"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 // Config represents the configuration of a sequencer
@@ -31,6 +32,9 @@ type Config struct {
 
 	// StreamServerCfg is the config for the stream server
 	StreamServer StreamServerCfg `mapstructure:"StreamServer"`
+
+	// L2Coinbase is the address receives the L2 fee
+	L2Coinbase common.Address `mapstructure:"L2Coinbase"`
 }
 
 // StreamServerCfg contains the data streamer's configuration properties

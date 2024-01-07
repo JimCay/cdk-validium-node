@@ -120,6 +120,7 @@ BlocksAmountForTxsToBeDeleted = 100
 FrequencyToCheckTxsForDelete = "12h"
 TxLifetimeCheckTimeout = "10m"
 MaxTxLifetime = "3h"
+L2Coinbase = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
 	[Sequencer.Finalizer]
 		GERDeadlineTimeout = "5s"
 		ForcedBatchDeadlineTimeout = "60s"
@@ -170,6 +171,7 @@ DefaultGasPriceWei = 2000000000
 MaxGasPriceWei = 0
 CleanHistoryPeriod = "1h"
 CleanHistoryTimeRetention = "5m"
+DefaultRatio = 10
 
 [MTClient]
 URI = "zkevm-prover:50061"

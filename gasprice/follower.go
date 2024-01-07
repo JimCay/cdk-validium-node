@@ -35,6 +35,10 @@ func (f *FollowerGasPrice) UpdateGasPriceAvg() {
 	ctx := context.Background()
 	// Get L1 gasprice
 	l1GasPrice := f.eth.GetL1GasPrice(f.ctx)
+	btcEthRatio, _ := f.eth.GetTokenRatio()
+	if btcEthRatio == 0 {
+		btcEthRatio = f.cfg.DefaultRatio
+	}
 	if big.NewInt(0).Cmp(l1GasPrice) == 0 {
 		log.Warn("gas price 0 received. Skipping update...")
 		return
@@ -42,7 +46,10 @@ func (f *FollowerGasPrice) UpdateGasPriceAvg() {
 
 	// Apply factor to calculate l2 gasPrice
 	factor := big.NewFloat(0).SetFloat64(f.cfg.Factor)
+	ratio := big.NewFloat(0).SetFloat64(btcEthRatio)
 	res := new(big.Float).Mul(factor, big.NewFloat(0).SetInt(l1GasPrice))
+
+	res = new(big.Float).Quo(res, ratio)
 
 	// Store l2 gasPrice calculated
 	result := new(big.Int)
@@ -71,7 +78,8 @@ func (f *FollowerGasPrice) UpdateGasPriceAvg() {
 	} else {
 		truncateValue = result
 	}
-	log.Debug("Storing truncated L2 gas price: ", truncateValue)
+
+	log.Debug("Setting gas prices, l1 : %d , l2 : %d", truncateValue.Uint64(), l1GasPrice.Uint64())
 	if truncateValue != nil {
 		err := f.pool.SetGasPrices(ctx, truncateValue.Uint64(), l1GasPrice.Uint64())
 		if err != nil {

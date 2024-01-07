@@ -6,18 +6,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"math"
-	"math/big"
-	"os"
-	"path/filepath"
-	"strings"
-	"time"
 
 	"github.com/0xPolygonHermez/zkevm-node/encoding"
 	"github.com/0xPolygonHermez/zkevm-node/etherman/etherscan"
 	"github.com/0xPolygonHermez/zkevm-node/etherman/ethgasstation"
 	"github.com/0xPolygonHermez/zkevm-node/etherman/metrics"
 	"github.com/0xPolygonHermez/zkevm-node/etherman/smartcontracts/cdkdatacommittee"
+	"github.com/0xPolygonHermez/zkevm-node/etherman/smartcontracts/chainlink"
 	"github.com/0xPolygonHermez/zkevm-node/etherman/smartcontracts/matic"
 	"github.com/0xPolygonHermez/zkevm-node/etherman/smartcontracts/polygonzkevm"
 	"github.com/0xPolygonHermez/zkevm-node/etherman/smartcontracts/polygonzkevmglobalexitroot"
@@ -36,6 +31,12 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/rpc"
 	"golang.org/x/crypto/sha3"
+	"math"
+	"math/big"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
 )
 
 var (
@@ -143,6 +144,7 @@ type Client struct {
 	Matic                 *matic.Matic
 	DataCommittee         *cdkdatacommittee.Cdkdatacommittee
 	SCAddresses           []common.Address
+	Price                 *chainlink.Price
 
 	GasProviders externalGasProviders
 
@@ -176,6 +178,8 @@ func NewClient(cfg Config, l1Config L1Config) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	price, err := chainlink.NewPrice(cfg.PriceAddress, ethClient)
 	var scAddresses []common.Address
 	scAddresses = append(scAddresses, l1Config.ZkEVMAddr, l1Config.GlobalExitRootManagerAddr)
 
@@ -205,6 +209,7 @@ func NewClient(cfg Config, l1Config L1Config) (*Client, error) {
 		l1Cfg: l1Config,
 		cfg:   cfg,
 		auth:  map[common.Address]bind.TransactOpts{},
+		Price: price,
 	}, nil
 }
 
@@ -1186,6 +1191,14 @@ func (etherMan *Client) LoadAuthFromKeyStore(path, password string) (*bind.Trans
 	log.Infof("loaded authorization for address: %v", auth.From.String())
 	etherMan.auth[auth.From] = auth
 	return &auth, pk, nil
+}
+
+func (etherMan *Client) GetTokenRatio() (float64, error) {
+	if etherMan.Price == nil {
+		return 0, nil
+	}
+	result, err := etherMan.Price.GetPriceRatio()
+	return result, err
 }
 
 // newKeyFromKeystore creates an instance of a keystore key from a keystore file

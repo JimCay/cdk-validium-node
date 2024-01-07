@@ -449,3 +449,29 @@ func TestProof(t *testing.T) {
 	}
 	t.Log("Proof: ", p)
 }
+
+//func TestChainLinkPrice(t *testing.T) {
+//	cfg := Config{
+//		URL:          "http://localhost:8545",
+//		PriceAddress: "0x15bA5e692b08580Dc40007e5C2FA280033860B6a",
+//	}
+//
+//	l1Config := L1Config{
+//		L1ChainID:                 1337,
+//		ZkEVMAddr:                 common.HexToAddress("0x610178dA211FEF7D417bC0e6FeD39F05609AD788"),
+//		MaticAddr:                 common.HexToAddress("0x5FbDB2315678afecb367f032d93F642f64180aa3"),
+//		GlobalExitRootManagerAddr: common.HexToAddress("0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6"),
+//	}
+//
+//	ethermanClient, err := NewClient(cfg, l1Config)
+//	if err != nil {
+//		log.Fatal(err)
+//		return
+//	}
+//	value, err := ethermanClient.Price.GetPriceRatio()
+//	if err != nil {
+//		log.Fatal(err)
+//		return
+//	}
+//	println(value)
+//}

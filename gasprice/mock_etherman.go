@@ -30,6 +30,11 @@ func (_m *ethermanMock) GetL1GasPrice(ctx context.Context) *big.Int {
 	return r0
 }
 
+// GetL1GasPrice provides a mock function with given fields: ctx
+func (_m *ethermanMock) GetTokenRatio() (float64, error) {
+	return 0, nil
+}
+
 // newEthermanMock creates a new instance of ethermanMock. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
 // The first argument is typically a *testing.T value.
 func newEthermanMock(t interface {

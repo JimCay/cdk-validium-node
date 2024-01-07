@@ -12,6 +12,10 @@ type Config struct {
 
 	// allow that L1 gas price calculation use multiples sources
 	MultiGasProvider bool `mapstructure:"MultiGasProvider"`
+
+	// chainLink aggregatorV3 address
+	PriceAddress string `mapstructure:"PriceAddress"`
+
 	// Configuration for use Etherscan as used as gas provider, basically it needs the API-KEY
 	Etherscan etherscan.Config
 }

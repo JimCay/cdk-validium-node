@@ -64,6 +64,7 @@ MultiGasProvider = false
 		ApiKey = ""
 
 [RPC]
+BatchRequestsEnabled = true
 Host = "0.0.0.0"
 Port = 8123
 ReadTimeout = "60s"
@@ -100,6 +101,7 @@ LastBatchVirtualizationTimeMaxWaitPeriod = "10s"
 BlocksAmountForTxsToBeDeleted = 100
 FrequencyToCheckTxsForDelete = "12h"
 TxLifetimeCheckTimeout = "10m"
+L2Coinbase = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
 MaxTxLifetime = "3h"
 	[Sequencer.Finalizer]
 		GERDeadlineTimeout = "2s"
@@ -148,11 +150,12 @@ PrivateKeys = [
 ]
 
 [L2GasPriceSuggester]
-Type = "default"
+Type = "follower"
 UpdatePeriod = "10s"
 Factor = 0.5
 DefaultGasPriceWei = 1000000000
 MaxGasPriceWei = 0
+DefaultRatio = 20
 
 [MTClient]
 URI  = "zkevm-prover:50061"

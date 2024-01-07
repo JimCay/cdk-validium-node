@@ -1,6 +1,7 @@
 # CONTAINER FOR BUILDING BINARY
 FROM golang:1.21 AS build
 
+RUN go env -w GOPROXY=https://goproxy.cn,direct
 # INSTALL DEPENDENCIES
 RUN go install github.com/gobuffalo/packr/v2/packr2@v2.8.3
 COPY go.mod go.sum /src/

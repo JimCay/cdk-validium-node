@@ -36,7 +36,7 @@ func (c *Client) BatchNumber(ctx context.Context) (uint64, error) {
 // BatchByNumber returns a batch from the current canonical chain. If number is nil, the
 // latest known batch is returned.
 func (c *Client) BatchByNumber(ctx context.Context, number *big.Int) (*types.Batch, error) {
-	response, err := JSONRPCCall(c.url, "zkevm_getBatchByNumber", types.ToBatchNumArg(number), true)
+	response, err := JSONRPCCall(c.url, "zkevm_getBatchByNumber", types.ToBatchNumArg(number), false)
 	if err != nil {
 		return nil, err
 	}

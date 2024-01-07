@@ -57,6 +57,7 @@ type Aggregator struct {
 	TimeCleanupLockedProofs types.Duration
 	StateDBMutex            *sync.Mutex
 	TimeSendFinalProofMutex *sync.RWMutex
+	GenerateProofDelay      types.Duration
 
 	finalProof     chan finalProofMsg
 	verifyingProof bool
@@ -91,8 +92,8 @@ func New(
 		StateDBMutex:            &sync.Mutex{},
 		TimeSendFinalProofMutex: &sync.RWMutex{},
 		TimeCleanupLockedProofs: cfg.CleanupLockedProofsInterval,
-
-		finalProof: make(chan finalProofMsg),
+		GenerateProofDelay:      cfg.GenerateProofDelay,
+		finalProof:              make(chan finalProofMsg),
 	}
 
 	return a, nil

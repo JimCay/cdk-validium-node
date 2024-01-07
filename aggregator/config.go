@@ -85,4 +85,7 @@ type Config struct {
 	// gas offset: 100
 	// final gas: 1100
 	GasOffset uint64 `mapstructure:"GasOffset"`
+
+	// GenerateProofDelay is the delay to start generating proof for a batch since the batch's timestamp
+	GenerateProofDelay types.Duration `mapstructure:"GenerateProofDelay"`
 }

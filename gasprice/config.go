@@ -35,4 +35,6 @@ type Config struct {
 	CleanHistoryTimeRetention types.Duration `mapstructure:"CleanHistoryTimeRetention"`
 
 	Factor float64 `mapstructure:"Factor"`
+
+	DefaultRatio float64 `mapstructure:"DefaultRatio"`
 }
