@@ -79,7 +79,7 @@ func (f *FollowerGasPrice) UpdateGasPriceAvg() {
 		truncateValue = result
 	}
 
-	log.Debug("Setting gas prices, l1 : %d , l2 : %d", truncateValue.Uint64(), l1GasPrice.Uint64())
+	log.Debug("Setting gas prices, l2 : ", truncateValue.Uint64(), " l1 :", l1GasPrice.Uint64())
 	if truncateValue != nil {
 		err := f.pool.SetGasPrices(ctx, truncateValue.Uint64(), l1GasPrice.Uint64())
 		if err != nil {
