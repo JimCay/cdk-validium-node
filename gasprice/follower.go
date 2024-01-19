@@ -36,6 +36,7 @@ func (f *FollowerGasPrice) UpdateGasPriceAvg() {
 	// Get L1 gasprice
 	l1GasPrice := f.eth.GetL1GasPrice(f.ctx)
 	btcEthRatio, _ := f.eth.GetTokenRatio()
+	log.Debug("ChainLink btcEthRatio value: ", btcEthRatio)
 	if btcEthRatio == 0 {
 		btcEthRatio = f.cfg.DefaultRatio
 	}
