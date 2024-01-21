@@ -761,6 +761,12 @@ func (a *Aggregator) getAndLockBatchToProve(ctx context.Context, prover proverIn
 	if err != nil {
 		return nil, nil, err
 	}
+	// check delay for generating proof, if not reaches delay, pretend that we didn't find batch to prove
+	if batchToVerify.Timestamp.Add(a.GenerateProofDelay.Duration).After(time.Now()) {
+		log.Debugf("Found virtual batch %d, batch timestamp %v, expected to start generating proof after %v",
+			batchToVerify.BatchNumber, batchToVerify.Timestamp.Unix(), batchToVerify.Timestamp.Add(a.GenerateProofDelay.Duration).Unix())
+		return nil, nil, state.ErrNotFound
+	}
 
 	log.Infof("Found virtual batch %d pending to generate proof", batchToVerify.BatchNumber)
 	log = log.WithFields("batch", batchToVerify.BatchNumber)
