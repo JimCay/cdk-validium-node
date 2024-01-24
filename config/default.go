@@ -65,6 +65,7 @@ GlobalQueue = 1024
 URL = "http://localhost:8545"
 ForkIDChunkSize = 20000
 MultiGasProvider = false
+PriceAddress = ""
 	[Etherman.Etherscan]
 		ApiKey = ""
 
@@ -162,6 +163,7 @@ ProofStatePollingInterval = "5s"
 CleanupLockedProofsInterval = "2m"
 GeneratingProofCleanupThreshold = "10m"
 GasOffset = 0
+GenerateProofDelay = "30s"
 
 [L2GasPriceSuggester]
 Type = "follower"
